@@ -497,3 +497,96 @@ select option {
 .sidebar .module-actions a:hover {
   background: rgba(255, 255, 255, 0.3);
 }
+
+/* Agregar Producto */
+/* Estilos para formulario de productos */
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #4158d0;
+  font-size: 16px;
+}
+
+.field input[type="text"],
+.field input[type="number"],
+.field textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.field input[type="text"]:focus,
+.field input[type="number"]:focus,
+.field textarea:focus {
+  border-color: #4158d0;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(65, 88, 208, 0.2);
+  outline: none;
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.field input[type="submit"] {
+  background-color: #4158d0;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  width: auto;
+  display: inline-block;
+}
+
+.field input[type="submit"]:hover {
+  background-color: #3a4db8;
+  transform: translateY(-2px);
+}
+
+.field input[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Estilo para notificaciones */
+.notificacion {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.notificacion.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
