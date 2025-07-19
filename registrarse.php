@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Usuario</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">Registro</div>
+    <form action="InicioSesion/registrarse.php" method="POST">
+      <div class="field">
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="nombre">Nombre</label>
+      </div>
+      <div class="field">
+        <input type="email" id="correo" name="correo" required>
+        <label for="correo">Correo</label>
+      </div>
+      <div class="field">
+        <input type="password" id="contrasena" name="contrasena" required>
+        <label for="contrasena">Contraseña</label>
+      </div>
+      <div class="field">
+        <select id="idRol" name="idRol" required>
+          <option value="" selected disabled >-- Seleccione un rol --</option>
+          <option value="1">Administrador</option>
+          <option value="2">Almacenista</option>
+        </select>
+        <label for="idRol">Rol</label>
+      </div>
+      <div class="field">
+        <input type="submit" value="Registrar">
+      </div>
+      <div class="signup-link">
+        ¿Ya tienes cuenta? <a href="index.php">Iniciar sesión</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
