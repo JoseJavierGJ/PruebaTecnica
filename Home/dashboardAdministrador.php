@@ -48,7 +48,7 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
     <div class="module-card">
       <h3>Histórico</h3>
       <div class="module-actions">
-        <a href="dashboardAdministrador.php?vista=historico">Ver registros históricos</a>
+        <a href="dashboardAdministrador.php?vista=historial_movimientos_admin">Ver registros históricos</a>
       </div>
     </div>
 

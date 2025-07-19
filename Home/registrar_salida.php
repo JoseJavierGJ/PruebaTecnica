@@ -4,65 +4,57 @@ require_once '../config/Connection.php';
 $connection = new Connection();
 $pdo = $connection->connect();
 
+$idUsuario = $_SESSION['idUsuario'] ?? null;
 $hayError = false;
-$idUsuario = $_SESSION['idUsuario'] ?? null; // Asegúrate de tener esto en el login
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   foreach ($_POST['productos'] as $idProducto => $datos) {
-    $nuevaCantidad = intval($datos['cantidad']);
-    $estatus = intval($datos['estatus']);
+    $cantidadSalida = intval($datos['cantidad']);
 
     // Obtener cantidad actual
-    $stmtActual = $pdo->prepare("SELECT cantidad FROM productos WHERE idProducto = ?");
+    $stmtActual = $pdo->prepare("SELECT cantidad FROM productos WHERE idProducto = ? AND estatus = 1");
     $stmtActual->execute([$idProducto]);
     $cantidadActual = $stmtActual->fetchColumn();
 
-    // Solo registrar si hubo aumento
-    if ($nuevaCantidad > $cantidadActual) {
+    if ($cantidadSalida > 0 && $cantidadSalida <= $cantidadActual) {
+      $nuevaCantidad = $cantidadActual - $cantidadSalida;
+
       // Actualizar producto
-      $stmt = $pdo->prepare("UPDATE productos SET cantidad = ?, estatus = ? WHERE idProducto = ?");
-      $stmt->execute([$nuevaCantidad, $estatus, $idProducto]);
+      $stmt = $pdo->prepare("UPDATE productos SET cantidad = ? WHERE idProducto = ?");
+      $stmt->execute([$nuevaCantidad, $idProducto]);
 
-      // Registrar movimiento como entrada (idTipoMovimiento = 1)
-      $cantidadMovida = $nuevaCantidad - $cantidadActual;
-
+      // Registrar salida (idTipoMovimiento = 2)
       $stmtMov = $pdo->prepare("INSERT INTO movimientos 
         (idProducto, idUsuario, idTipoMovimiento, cantidad, cantidadAnterior, cantidadNueva)
-        VALUES (?, ?, 1, ?, ?, ?)");
-      $stmtMov->execute([$idProducto, $idUsuario, $cantidadMovida, $cantidadActual, $nuevaCantidad]);
-    } else if ($nuevaCantidad < $cantidadActual) {
-      // No se permite reducir, se marca error
+        VALUES (?, ?, 2, ?, ?, ?)");
+      $stmtMov->execute([$idProducto, $idUsuario, $cantidadSalida, $cantidadActual, $nuevaCantidad]);
+    } elseif ($cantidadSalida > $cantidadActual) {
       $hayError = true;
     }
-    // Si no cambió la cantidad, no se hace nada
+    // Si la cantidad es 0 o negativa, no se hace nada
   }
 
   if ($hayError) {
-    header("Location: dashboardAdministrador.php?vista=ajustar_inventario&error=1");
+    header("Location: dashboardAlmacenista.php?vista=registrar_salida&error=1");
   } else {
-    header("Location: dashboardAdministrador.php?vista=ajustar_inventario&success=1");
+    header("Location: dashboardAlmacenista.php?vista=registrar_salida&success=1");
   }
   exit;
 }
 
-
-// Obtener productos
-$sql = "SELECT idProducto, nombre, descripcion, cantidad, estatus FROM productos";
+// Obtener productos activos
+$sql = "SELECT idProducto, nombre, descripcion, cantidad FROM productos WHERE estatus = 1";
 $stmt = $pdo->query($sql);
 $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<h1>Ajustar Inventario</h1>
+<h1>Registrar Salida</h1>
 
 <div class="card">
   <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-    <div class="notificacion">
-      ✅ Cambios guardados correctamente
-    </div>
+    <div class="notificacion">✅ Salidas registradas correctamente</div>
   <?php elseif (isset($_GET['error']) && $_GET['error'] == 1): ?>
-    <div class="notificacion error">
-      ⚠️ No se permite reducir la cantidad de productos. Solo puedes aumentarla.
-    </div>
+    <div class="notificacion error">⚠️ No puedes retirar más de lo disponible.</div>
   <?php endif; ?>
 
   <form method="POST">
@@ -86,8 +78,8 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th style="padding: 10px;">ID</th>
             <th style="padding: 10px;">Nombre</th>
             <th style="padding: 10px;">Descripción</th>
-            <th style="padding: 10px;">Cantidad</th>
-            <th style="padding: 10px;">Estatus</th>
+            <th style="padding: 10px;">Cantidad Disponible</th>
+            <th style="padding: 10px;">Cantidad a Salir</th>
           </tr>
         </thead>
         <tbody>
@@ -96,14 +88,9 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <td style="padding: 10px;"><?php echo $producto['idProducto']; ?></td>
               <td style="padding: 10px;"><?php echo htmlspecialchars($producto['nombre']); ?></td>
               <td style="padding: 10px;"><?php echo htmlspecialchars($producto['descripcion']); ?></td>
+              <td style="padding: 10px;"><?php echo $producto['cantidad']; ?></td>
               <td style="padding: 10px;">
-                <input type="number" name="productos[<?php echo $producto['idProducto']; ?>][cantidad]" value="<?php echo $producto['cantidad']; ?>" style="width: 80px; padding: 6px;">
-              </td>
-              <td style="padding: 10px;">
-                <select name="productos[<?php echo $producto['idProducto']; ?>][estatus]" style="padding: 6px;">
-                  <option value="1" <?php if ($producto['estatus'] == 1) echo 'selected'; ?>>Activo</option>
-                  <option value="0" <?php if ($producto['estatus'] == 0) echo 'selected'; ?>>Inactivo</option>
-                </select>
+                <input type="number" name="productos[<?php echo $producto['idProducto']; ?>][cantidad]" value="0" min="0" max="<?php echo $producto['cantidad']; ?>" style="width: 80px; padding: 6px;">
               </td>
             </tr>
           <?php endforeach; ?>
@@ -113,7 +100,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div style="margin-top: 20px; text-align: center;">
       <button type="submit" style="padding: 10px 20px; background-color: #4158d0; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        Guardar Cambios
+        Registrar Salida
       </button>
     </div>
   </form>
@@ -182,13 +169,6 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         paginacion.appendChild(btn);
       }
     }
-  }
-
-  const mensaje = document.querySelector(".notificacion");
-  if (mensaje) {
-    setTimeout(() => {
-      mensaje.style.display = "none";
-    }, 3000);
   }
 
   window.addEventListener("load", aplicarFiltroYPaginacion);

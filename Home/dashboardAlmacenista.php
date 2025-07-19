@@ -7,7 +7,6 @@ if (!isset($_SESSION['nombre']) || $_SESSION['idRol'] != 2) {
   exit();
 }
 
-// Vista dinámica (inicio por defecto)
 $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
 ?>
 
@@ -38,8 +37,8 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
     <div class="module-card">
       <h3>Salidas de Productos</h3>
       <div class="module-actions">
-        <a href="#">Registrar salida</a>
-        <a href="#">Historial de salidas</a>
+        <a href="dashboardAlmacenista.php?vista=registrar_salida">Registrar salida</a>
+        <a href="dashboardAlmacenista.php?vista=historial_salidas">Historial de salidas</a>
       </div>
     </div>
 
@@ -47,13 +46,9 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
   </div>
 
   <div class="main-content">
-    <div class="header">
-      <h1>Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre']); ?></h1>
-    </div>
-
     <?php
-      if ($vista === 'inicio') {
-        echo '
+    if ($vista === 'inicio') {
+      echo '<h1>Bienvenido, ' . htmlspecialchars($_SESSION['nombre']) . '</h1>
         <div class="card">
           <h3>Resumen de Almacén</h3>
           <p>Panel principal para la gestión de inventario y salidas de productos.</p>
@@ -63,17 +58,18 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
           <h3>Acciones Rápidas</h3>
           <div class="quick-actions">
             <a href="dashboardAlmacenista.php?vista=ver_inventario">Consultar inventario</a>
-            <a href="#">Registrar salida</a>
+            <a href="dashboardAlmacenista.php?vista=registrar_salida">Registrar salida</a>
+            <a href="dashboardAlmacenista.php?vista=historial_salidas">Historial de salidas</a>
           </div>
         </div>';
+    } else {
+      $archivo = __DIR__ . '/' . $vista . '.php';
+      if (file_exists($archivo)) {
+        include $archivo;
       } else {
-        $archivo = __DIR__ . '/' . $vista . '.php';
-        if (file_exists($archivo)) {
-          include $archivo;
-        } else {
-          echo "<div class='card'><h3>Error</h3><p>La vista solicitada no existe.</p></div>";
-        }
+        echo "<div class='card'><h3>Error</h3><p>La vista solicitada no existe.</p></div>";
       }
+    }
     ?>
   </div>
 </body>
