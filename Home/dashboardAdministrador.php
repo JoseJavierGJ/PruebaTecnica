@@ -40,7 +40,7 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
         <a href="dashboardAdministrador.php?vista=ver_inventario">Ver inventario</a>
         <a href="dashboardAdministrador.php?vista=agregar_producto">Agregar producto</a>
         <a href="dashboardAdministrador.php?vista=ajustar_inventario">Ajustar inventario</a>
-        <a href="dashboardAdministrador.php?vista=gestionar_productos">Gestionar productos</a>
+        <!-- <a href="dashboardAdministrador.php?vista=gestionar_productos">Gestionar productos</a> -->
       </div>
     </div>
 
@@ -55,7 +55,7 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
     <a href="../InicioSesion/CerrarSesion.php">Cerrar sesión</a>
   </div>
 
-  <div class="main">
+  <div class="main-content"">
     <?php
       if ($vista === 'inicio') {
         echo '<h1>Bienvenido, ' . htmlspecialchars($_SESSION['nombre']) . '</h1>
@@ -67,7 +67,7 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
           <h3>Acciones Rápidas</h3>
           <div class="quick-actions">
             <a href="dashboardAdministrador.php?vista=agregar_producto">Agregar Producto</a>
-            <a href="dashboardAdministrador.php?vista=ajustar_inventario">Ajustar Inventario</a>
+             <a href="dashboardAdministrador.php?vista=ajustar_inventario">Ajustar Inventario</a>
             <a href="dashboardAdministrador.php?vista=historico">Ver Histórico</a>
           </div>
         </div>';

@@ -37,7 +37,6 @@ body {
   user-select: none;
   border-radius: 15px 15px 0 0;
   background: #4158d0;
-  /* Cambio aquí - eliminado el gradiente */
 }
 
 .wrapper form {
@@ -289,7 +288,7 @@ form .signup-link a:hover {
 }
 
 
-/* DashBoard Secretaria*/
+/* DashBoard Almacenista*/
 
 .sidebar {
   height: 100%;
@@ -322,6 +321,7 @@ form .signup-link a:hover {
 .main-content {
   margin-left: 250px;
   padding: 20px;
+  width: 60%;
 }
 
 .header {
@@ -418,7 +418,7 @@ select option {
   transform: translateY(-50%);
 }
 
-/* Dashboard Admin Styles */
+/* Dashboard Admin */
 .module-card {
   background: white;
   border-radius: 8px;
@@ -499,7 +499,6 @@ select option {
 }
 
 /* Agregar Producto */
-/* Estilos para formulario de productos */
 .field {
   margin-bottom: 20px;
 }
