@@ -13,7 +13,6 @@ if ($_SESSION['idRol'] !== 1) {
   exit;
 }
 
-// Vista dinámica (inicio por defecto)
 $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
 ?>
 

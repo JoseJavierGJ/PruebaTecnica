@@ -5,7 +5,7 @@ $connection = new Connection();
 $pdo = $connection->connect();
 
 $hayError = false;
-$idUsuario = $_SESSION['idUsuario'] ?? null; // Asegúrate de tener esto en el login
+$idUsuario = $_SESSION['idUsuario'] ?? null; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   foreach ($_POST['productos'] as $idProducto => $datos) {
@@ -19,11 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Solo registrar si hubo aumento
     if ($nuevaCantidad > $cantidadActual) {
-      // Actualizar producto
+
       $stmt = $pdo->prepare("UPDATE productos SET cantidad = ?, estatus = ? WHERE idProducto = ?");
       $stmt->execute([$nuevaCantidad, $estatus, $idProducto]);
-
-      // Registrar movimiento como entrada (idTipoMovimiento = 1)
       $cantidadMovida = $nuevaCantidad - $cantidadActual;
 
       $stmtMov = $pdo->prepare("INSERT INTO movimientos 
@@ -31,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         VALUES (?, ?, 1, ?, ?, ?)");
       $stmtMov->execute([$idProducto, $idUsuario, $cantidadMovida, $cantidadActual, $nuevaCantidad]);
     } else if ($nuevaCantidad < $cantidadActual) {
-      // No se permite reducir, se marca error
+      // No se permite reducir, marca error
       $hayError = true;
     }
     // Si no cambió la cantidad, no se hace nada
