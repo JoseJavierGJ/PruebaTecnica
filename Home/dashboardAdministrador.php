@@ -22,14 +22,14 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Administrador</title>
+  <title>Administación</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
 </head>
 
 <body>
   <div class="sidebar">
-    <h2>Dashboard Admin</h2>
+    <h2>Administación</h2>
     <a href="dashboardAdministrador.php?vista=inicio" class="active">Inicio</a>
 
     <!-- Módulo de Inventario -->
@@ -39,7 +39,6 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
         <a href="dashboardAdministrador.php?vista=ver_inventario">Ver inventario</a>
         <a href="dashboardAdministrador.php?vista=agregar_producto">Agregar producto</a>
         <a href="dashboardAdministrador.php?vista=ajustar_inventario">Ajustar inventario</a>
-        <!-- <a href="dashboardAdministrador.php?vista=gestionar_productos">Gestionar productos</a> -->
       </div>
     </div>
 
@@ -66,8 +65,8 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
           <h3>Acciones Rápidas</h3>
           <div class="quick-actions">
             <a href="dashboardAdministrador.php?vista=agregar_producto">Agregar Producto</a>
-             <a href="dashboardAdministrador.php?vista=ajustar_inventario">Ajustar Inventario</a>
-            <a href="dashboardAdministrador.php?vista=historico">Ver Histórico</a>
+            <a href="dashboardAdministrador.php?vista=ajustar_inventario">Ajustar Inventario</a>
+            <a href="dashboardAdministrador.php?vista=historial_movimientos_admin">Ver Histórico</a>
           </div>
         </div>';
       } else {
@@ -81,5 +80,16 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
     ?>
   </div>
 </body>
+
+<script>
+  document.querySelectorAll(".module-card h3").forEach(titulo => {
+    titulo.style.cursor = "pointer";
+    titulo.addEventListener("click", () => {
+      const acciones = titulo.nextElementSibling;
+      acciones.style.display = acciones.style.display === "none" ? "flex" : "none";
+    });
+  });
+</script>
+
 
 </html>

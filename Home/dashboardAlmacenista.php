@@ -15,7 +15,7 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
 
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard de Almacén</title>
+  <title>Almacén</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
 </head>

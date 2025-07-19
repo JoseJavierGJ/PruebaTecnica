@@ -41,22 +41,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="card">
   <form method="POST" action="">
+
     <div class="field">
       <label for="nombre">Nombre del producto</label><br>
       <input type="text" name="nombre" id="nombre" required>
     </div>
-    <br>
+
     <div class="field">
       <label for="descripcion">Descripción</label><br>
       <textarea name="descripcion" id="descripcion" rows="4" style="width: 100%; border-radius: 10px; padding: 10px;"></textarea>
     </div>
-    <br>
+
+
     <div class="field">
       <label for="cantidad">Cantidad inicial</label><br>
       <input type="number" name="cantidad" id="cantidad" min="0" value="0">
     </div>
-    <br>
-    <div class="field">
+
+
+    <div class="field submit-container">
       <input type="submit" value="Agregar Producto">
     </div>
   </form>

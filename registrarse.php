@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Registro de Usuario</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
+  <header class="login-header">
+    Sistema de Inventario
+  </header>
   <div class="wrapper">
     <div class="title">Registro</div>
     <form action="InicioSesion/registrarse.php" method="POST">
@@ -24,7 +29,7 @@
       </div>
       <div class="field">
         <select id="idRol" name="idRol" required>
-          <option value="" selected disabled >-- Seleccione un rol --</option>
+          <option value="" selected disabled>-- Seleccione un rol --</option>
           <option value="1">Administrador</option>
           <option value="2">Almacenista</option>
         </select>
@@ -38,5 +43,10 @@
       </div>
     </form>
   </div>
+
+  <footer class="login-footer">
+    © 2025 Sistema de Inventario. Desarrollado por José Javier.
+  </footer>
 </body>
+
 </html>
