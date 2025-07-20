@@ -38,7 +38,6 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
       <h3>Salidas de Productos</h3>
       <div class="module-actions">
         <a href="dashboardAlmacenista.php?vista=registrar_salida">Registrar salida</a>
-        <!-- <a href="dashboardAlmacenista.php?vista=historial_salidas">Historial de salidas</a> -->
       </div>
     </div>
 

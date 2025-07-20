@@ -7,15 +7,22 @@
   font-family: 'Poppins', sans-serif;
 }
 
-html,
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
 body {
   display: grid;
-  height: 100%;
-  width: 100%;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
   place-items: center;
   background: #f2f2f2;
-  margin: 0;
-  padding: 0
+  font-family: 'Poppins', sans-serif;
 }
 
 .login-header {
@@ -26,7 +33,7 @@ body {
   text-align: center;
   font-size: 24px;
   font-weight: 500;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   top: 0;
   left: 0;
@@ -39,8 +46,7 @@ body {
   padding: 9px 0;
   text-align: center;
   font-size: 14px;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-  margin-top: auto;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
 }
 
 ::selection {
@@ -53,8 +59,7 @@ body {
   background: #fff;
   border-radius: 15px;
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
-  margin: 40px auto;
-  flex-grow: 1;
+  margin: 17px auto;
 }
 
 .wrapper .title {
@@ -332,7 +337,6 @@ form .signup-link a:hover {
   color: #666;
 }
 
-
 /* DashBoard Almacenista*/
 
 .sidebar {
@@ -365,7 +369,7 @@ form .signup-link a:hover {
 
 .main-content {
   margin-left: 250px;
-  padding: 20px;
+  padding: 50px;
   width: 70%;
 }
 
@@ -451,7 +455,7 @@ select option {
   border-color: #4158d0;
 }
 
-/* Label animado para select */
+/* label animado select */
 .wrapper form .field select:focus~label,
 .wrapper form .field select:valid~label,
 .wrapper form .field select:not([value=""])~label {
@@ -464,6 +468,51 @@ select option {
 }
 
 /* Dashboard Admin */
+
+/* .main-content > h1 {
+  color: #000000;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 28px;
+  width: 100%;
+} */
+
+.main-content > h1 {
+  color: #000000;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 28px;
+  width: 100%;
+  position: relative;
+  padding-left: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.3px;
+}
+
+.main-content > h1::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: #4158d0;
+  border-radius: 2px;
+}
+
+.main-content > h1 span {
+  color: #4158d0;
+  font-weight: 700;
+}
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
 .module-card {
   background: white;
   border-radius: 8px;
@@ -501,8 +550,10 @@ select option {
 
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, auto);
   gap: 15px;
+  /* justify-content: center;
+  justify-items: center; */
 }
 
 .quick-actions a {
@@ -519,7 +570,6 @@ select option {
   background: #e0e0e0;
 }
 
-/* Sidebar specific styles for admin */
 .sidebar {
   background: #4158d0;
   color: #fff;
@@ -561,11 +611,11 @@ select option {
 form {
   display: flex;
   flex-direction: column;
-  gap: 15px; 
+  gap: 15px;
 }
 
 .field {
-  margin-bottom: 0; 
+  margin-bottom: 0;
 }
 
 .field label {
@@ -594,7 +644,7 @@ form {
 /* Contenedor del botón */
 .field.submit-container {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   margin-top: 10px;
 }
 
@@ -613,7 +663,7 @@ form {
 .field.submit-container input[type="submit"]:hover {
   background-color: #3148b0;
   transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* botón */
@@ -626,14 +676,14 @@ form {
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: auto; 
+  width: auto;
   display: inline-block;
 }
 
 .field input[type="submit"]:hover {
   background-color: #3148b0;
   transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .field input[type="submit"]:active {
@@ -700,8 +750,10 @@ form {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
