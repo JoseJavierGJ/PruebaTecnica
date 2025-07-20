@@ -26,8 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 ?>
+<div class="seccion-titulo">
+  <h1>Agregar Producto</h1>
+</div>
 
-<h1>Agregar Producto</h1>
 
 <?php if (!empty($mensaje)) : ?>
   <div class="notificacion"><?php echo htmlspecialchars($mensaje); ?></div>

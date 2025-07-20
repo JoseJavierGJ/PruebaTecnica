@@ -47,19 +47,21 @@ $vista = isset($_GET['vista']) ? $_GET['vista'] : 'inicio';
   <div class="main-content">
     <?php
     if ($vista === 'inicio') {
-      echo '<h1>Bienvenido, ' . htmlspecialchars($_SESSION['nombre']) . '</h1>
-        <div class="card">
-          <h3>Resumen de Almacén</h3>
-          <p>Panel principal para la gestión de inventario y salidas de productos.</p>
-        </div>
+      echo '<div class="seccion-titulo">
+              <h1>Bienvenido, ' . htmlspecialchars($_SESSION['nombre']) . '</h1>
+            </div>
+            <div class="card">
+              <h3>Resumen de Almacén</h3>
+              <p>Panel principal para la gestión de inventario y salidas de productos.</p>
+            </div>
 
-        <div class="card">
-          <h3>Acciones Rápidas</h3>
-          <div class="quick-actions">
-            <a href="dashboardAlmacenista.php?vista=ver_inventario">Consultar inventario</a>
-            <a href="dashboardAlmacenista.php?vista=registrar_salida">Registrar salida</a>
-          </div>
-        </div>';
+            <div class="card">
+              <h3>Acciones Rápidas</h3>
+              <div class="quick-actions">
+                <a href="dashboardAlmacenista.php?vista=ver_inventario">Consultar inventario</a>
+                <a href="dashboardAlmacenista.php?vista=registrar_salida">Registrar salida</a>
+              </div>
+            </div>';
     } else {
       $archivo = __DIR__ . '/' . $vista . '.php';
       if (file_exists($archivo)) {
