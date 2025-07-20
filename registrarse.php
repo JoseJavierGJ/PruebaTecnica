@@ -24,7 +24,7 @@
         <label for="correo">Correo</label>
       </div>
       <div class="field">
-        <input type="password" id="contrasena" name="contrasena" required>
+        <input type="password" id="contrasena" name="contrasena" required minlength="6">
         <label for="contrasena">Contraseña</label>
       </div>
       <div class="field">
@@ -47,6 +47,39 @@
   <footer class="login-footer">
     © 2025 Sistema de Inventario. Desarrollado por José Javier.
   </footer>
+
+  <script>
+    document.getElementById('registroForm').addEventListener('submit', function(e) {
+      const correo = document.getElementById('correo').value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(correo)) {
+        e.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          title: 'Correo inválido',
+          text: 'Por favor ingresa un correo electrónico válido',
+          confirmButtonColor: '#4158d0'
+        });
+        return false;
+      }
+
+      // Validación adicional de contraseña
+      const contrasena = document.getElementById('contrasena').value;
+      if (contrasena.length < 6) {
+        e.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          title: 'Contraseña muy corta',
+          text: 'La contraseña debe tener al menos 6 caracteres',
+          confirmButtonColor: '#4158d0'
+        });
+        return false;
+      }
+
+      return true;
+    });
+  </script>
 </body>
 
 </html>

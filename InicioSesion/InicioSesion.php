@@ -30,7 +30,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       exit();
     } else {
-      echo "<script>alert('Credenciales incorrectas.'); window.location.href = '../index.php';</script>";
+      ?>
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      </head>
+      <body>
+        <script>
+          Swal.fire({
+            icon: 'error',
+            title: 'Credenciales incorrectas',
+            text: 'Verifica tu correo y contraseña',
+            confirmButtonColor: '#4158d0'
+          }).then(() => {
+            window.location.href = '../index.php';
+          });
+        </script>
+      </body>
+      </html>
+      <?php
     }
   } catch (\Throwable $th) {
     echo "Error en la conexión: " . $th->getMessage();
