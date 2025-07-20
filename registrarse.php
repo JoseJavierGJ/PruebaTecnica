@@ -14,7 +14,7 @@
   </header>
   <div class="wrapper">
     <div class="title">Registro</div>
-    <form action="InicioSesion/registrarse.php" method="POST">
+    <form action="InicioSesion/registrarse.php" method="POST" id="registroForm">
       <div class="field">
         <input type="text" id="nombre" name="nombre" required>
         <label for="nombre">Nombre</label>

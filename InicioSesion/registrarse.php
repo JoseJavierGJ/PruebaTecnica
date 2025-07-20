@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $contrasena = password_hash($_POST['contrasena'], PASSWORD_BCRYPT);
   $idRol = $_POST['idRol'];
 
-    // Validacion  correo 
+  // Validacion correo 
   if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
     echo '
     <!DOCTYPE html>
@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
   }
 
-  // Validación ontraseña
-  if (strlen($contrasena) < 6) {
+  // Validación contraseña
+  if (strlen($_POST['contrasena']) < 6) {
     echo '
     <!DOCTYPE html>
     <html lang="es">
@@ -60,6 +60,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   try {
     $connection = new Connection();
     $pdo = $connection->connect();
+
+    // Primero verificamos si el correo ya existe
+    $sqlCheck = "SELECT COUNT(*) FROM usuarios WHERE correo = :correo";
+    $stmtCheck = $pdo->prepare($sqlCheck);
+    $stmtCheck->execute(['correo' => $correo]);
+    $count = $stmtCheck->fetchColumn();
+
+    if ($count > 0) {
+      echo '
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      </head>
+      <body>
+        <script>
+          Swal.fire({
+            icon: "error",
+            title: "Correo ya registrado",
+            text: "El correo electrónico ya está en uso. Por favor utiliza otro correo.",
+            confirmButtonColor: "#4158d0"
+          }).then(() => {
+            window.location.href = "../registrarse.php";
+          });
+        </script>
+      </body>
+      </html>';
+      exit;
+    }
 
     $sql = "INSERT INTO usuarios (nombre, correo, contrasena, idRol)
             VALUES (:nombre, :correo, :contrasena, :idRol)";
@@ -93,8 +123,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </html>
     <?php
 
-  } catch (\Throwable $th) {
-    $mensaje = addslashes($th->getMessage());
+  } catch (PDOException $e) {
+    if ($e->getCode() == '23000') { // Código para violación de integridad (duplicado)
+      $mensaje = "El correo electrónico ya está registrado. Por favor utiliza otro correo.";
+    } else {
+      $mensaje = addslashes($e->getMessage());
+    }
     ?>
     <!DOCTYPE html>
     <html lang="es">
