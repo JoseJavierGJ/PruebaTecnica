@@ -9,18 +9,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $cantidad = isset($_POST['cantidad']) ? (int)$_POST['cantidad'] : 0;
 
   try {
-    $connection = new Connection();
-    $pdo = $connection->connect();
+    if ($cantidad <= 0) {
+      $mensaje = 'Error: La cantidad debe ser superior a 0 ❌';
+    } else {
+      $connection = new Connection();
+      $pdo = $connection->connect();
 
-    $sql = "INSERT INTO productos (nombre, descripcion, cantidad) VALUES (:nombre, :descripcion, :cantidad)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-      'nombre' => $nombre,
-      'descripcion' => $descripcion,
-      'cantidad' => $cantidad
-    ]);
+      $sql = "INSERT INTO productos (nombre, descripcion, cantidad) VALUES (:nombre, :descripcion, :cantidad)";
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute([
+        'nombre' => $nombre,
+        'descripcion' => $descripcion,
+        'cantidad' => $cantidad
+      ]);
 
-    $mensaje = 'Producto agregado correctamente ✅';
+      $mensaje = 'Producto agregado correctamente ✅';
+    }
   } catch (Throwable $th) {
     $mensaje = 'Error al agregar el producto ❌: ' . $th->getMessage();
   }
@@ -30,9 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <h1>Agregar Producto</h1>
 </div>
 
-
 <?php if (!empty($mensaje)) : ?>
-  <div class="notificacion"><?php echo htmlspecialchars($mensaje); ?></div>
+  <div class="notificacion <?php echo strpos($mensaje, 'Error') !== false ? 'error' : 'exito'; ?>">
+    <?php echo htmlspecialchars($mensaje); ?>
+  </div>
   <script>
     setTimeout(() => {
       const noti = document.querySelector('.notificacion');
@@ -54,12 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <textarea name="descripcion" id="descripcion" rows="4" style="width: 100%; border-radius: 10px; padding: 10px;"></textarea>
     </div>
 
-
     <div class="field">
       <label for="cantidad">Cantidad inicial</label><br>
-      <input type="number" name="cantidad" id="cantidad" min="0" value="0">
+      <input type="number" name="cantidad" id="cantidad" min="1" value="0" required>
     </div>
-
 
     <div class="field submit-container">
       <input type="submit" value="Agregar Producto">
