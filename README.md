@@ -73,7 +73,7 @@ Incluye registro e inicio de sesión, gestión de productos, control de entradas
 
 - Abrir phpMyAdmin con el siguiente enlace (http://localhost/phpmyadmin).
 - Crear una base de datos con el nombre **prueba_tecnica**.
-- Ir a la pestaña **Importar**, seleccionar el archivo `.sql` correspondiente desde la carpeta `SCRIPTS` y ejecutarlo.
+- Ir a la pestaña **Importar**, seleccionar el archivo `prueba_tecnica.sql` correspondiente desde la carpeta `SCRIPTS` y ejecutarlo.
 
 ### 6. Ejecutar el proyecto
 
